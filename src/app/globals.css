@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #FEFEFE;
-  --foreground: #171717;
+  --background: var(--color-neutral-50);
+  --foreground: var(--color-neutral-950);
+}
+
+.dark {
+  --background: var(--color-neutral-950);
+  --foreground: var(--color-neutral-50);
 }
 
 @theme inline {
@@ -12,12 +19,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 @font-face {
   font-family: "Satoshi";

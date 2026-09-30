@@ -1,20 +1,20 @@
-import HeroSection from "@/components/HeroSection";
+import MainSection from "@/components/MainSection";
 
 export default function Home() {
   return (
-    <div className="relative flex items-center justify-center min-h-screen w-full">
+    <div className="relative flex items-start justify-center min-h-screen w-full">
       <div className="max-w-xl z-0 absolute h-full w-full">
-        <div className="absolute h-full w-full border-x border-dashed border-neutral-400" />
+        <div className="absolute h-full w-full border-x border-dashed border-neutral-400 dark:border-neutral-700" />
       </div>
       <div className="absolute inset-0 z-0 w-full">
-        <div className="absolute top-36 w-full border-t border-dashed border-neutral-400" />
-        <div className="absolute bottom-12 w-full border-t border-dashed border-neutral-400" />
+        <div className="absolute top-36 w-full border-t border-dashed border-neutral-400 dark:border-neutral-700" />
+        <div className="absolute bottom-12 w-full border-t border-dashed border-neutral-400 dark:border-neutral-700" />
       </div>
       <Pattern />
       <Pattern2 />
       <Pattern3 />
       <div className="max-w-xl w-full h-full z-10">
-        <HeroSection />
+        <MainSection />
       </div>
     </div>
   );
