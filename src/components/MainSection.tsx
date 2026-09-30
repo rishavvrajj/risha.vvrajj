@@ -1,6 +1,6 @@
 'use client'
 
-import { CircleDot, Sun } from 'lucide-react'
+import { CircleDot, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -8,7 +8,7 @@ import { GitHubCalendar } from 'react-github-calendar'
 
 export default function MainSection() {
 
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -16,10 +16,11 @@ export default function MainSection() {
     }, []);
 
     const SWITCH_THEME = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
+        setTheme(resolvedTheme === "dark" ? "light" : "dark");
     }
 
-    const isDark = mounted && theme === 'dark';
+    // Determine if it's currently dark mode safely, checking if we're mounted to avoid hydration mismatch
+    const isDark = mounted && resolvedTheme === 'dark';
 
     return (
         <div className="h-full w-full">
@@ -56,7 +57,7 @@ export default function MainSection() {
                             alt="profile"
                             width={96}
                             height={96}
-                            className='object-cover rounded-md border border-dashed border-neutral-400 dark:border-neutral-700'
+                            className='object-cover rounded-md border border-dashed border-neutral-400 dark:border-neutral-700 hover:opacity-90 transition-opacity duration-200 cursor-default'
                         />
                     )}
                     {!mounted && (
@@ -82,8 +83,9 @@ export default function MainSection() {
                     <span className='text-xs tracking-wide col-span-2'>19 y/o Polymath learning human things.</span>
                 </div>
                 <div className='h-24 w-12 flex justify-end items-start'>
-                    <button onClick={SWITCH_THEME} className='top-0 left-0 h-6 w-6 flex items-center justify-center text-neutral-600 dark:text-neutral-400 hover:cursor-pointer'>
-                        <Sun size={16} />
+                    <button onClick={SWITCH_THEME} className='top-0 left-0 h-4 w-4 relative items-center justify-center text-neutral-600 dark:text-neutral-400 hover:cursor-pointer hover:rotate-12 transition-transform duration-200'>
+                        <Sun size={16} className='absolute dark:scale-0 dark:rotate-45 inset-0 w-full h-full transition-all duration-300' />
+                        <Moon size={12} className='absolute scale-0 dark:scale-100 inset-0 w-full h-full transition-all duration-300' />
                     </button>
                 </div>
             </div>
@@ -106,30 +108,30 @@ export default function MainSection() {
             </div>
 
             <div className='grid grid-cols-2 bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 p-3 h-52 border border-dashed border-neutral-400 dark:border-neutral-700 gap-3'>
-                <div className="flex h-full w-full flex-col rounded-sm border border-neutral-300 dark:border-neutral-700 p-2">
+                <div className="group flex h-full w-full flex-col rounded-sm border border-neutral-300 dark:border-neutral-700 p-2 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors duration-200 cursor-pointer">
                     <div className="aspect-[16/9] w-full overflow-hidden rounded-sm">
                         <img
                             src="/card-1.png"
                             alt="Profile"
-                            className="object-cover h-full w-full rounded-md border border-neutral-300 dark:border-neutral-700"
+                            className="object-cover group-hover:scale-[1.05] transition-transform duration-300 h-full w-full rounded-md border border-neutral-300 dark:border-neutral-700"
                         />
                     </div>
 
-                    <h1 className="px-0.5 mt-2 flex w-full items-center justify-between px-0.5 text-xs">
+                    <h1 className="px-0.5 mt-2 flex w-full items-center justify-between text-xs text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors duration-200">
                         <span>Leuk</span>
                         <span className='flex items-center justify-center gap-1'><CircleDot className='text-green-600' size={8} />live</span>
                     </h1>
                 </div>
-                <div className="flex h-full w-full flex-col rounded-sm border border-neutral-300 dark:border-neutral-700 p-2">
+                <div className="group flex h-full w-full flex-col rounded-sm border border-neutral-300 dark:border-neutral-700 p-2 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors duration-200 cursor-pointer">
                     <div className="aspect-[16/9] w-full overflow-hidden rounded-sm">
                         <img
                             src="/card-2.png"
                             alt="Profile"
-                            className="object-cover h-full w-full rounded-md border border-neutral-300 dark:border-neutral-700"
+                            className="object-cover group-hover:scale-[1.05] transition-transform duration-300 h-full w-full rounded-md border border-neutral-300 dark:border-neutral-700"
                         />
                     </div>
 
-                    <h1 className="px-0.5 mt-2 flex w-full items-center justify-between px-0.5 text-xs">
+                    <h1 className="px-0.5 mt-2 flex w-full items-center justify-between text-xs text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors duration-200">
                         <span>Comming Soon</span>
                         <span className='flex items-center justify-center gap-1'><CircleDot className='text-red-600' size={8} />Building</span>
                     </h1>
@@ -142,13 +144,17 @@ export default function MainSection() {
                         <h1 className='text-start w-full text-sm'>
                             [ extra ]
                         </h1>
-                        <p className='text-xs'>
+                        <p className='text-xs leading-3'>
                             @ rishavvrajj
                         </p>
                     </div>
-                    <div className='w-4/5 h-full flex flex-col items-start justify-between text-sm'>
+                    <div className='leading-3 w-4/5 h-full flex flex-col items-start justify-between text-sm'>
                         <p className='text-xs'>I use analysis, design, and engineering to build simple tools. Staying warm with coffee, chess, music, and sketching.</p>
-                        <p className='space-x-2 text-end w-full underline'><span>x</span><span>github</span><span>linkedin</span></p>
+                        <p className='space-x-3 text-end w-full'>
+                            <a href="https://x.com/rishavvrajj" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 hover:underline hover:text-black dark:hover:text-white transition-all duration-150">x</a>
+                            <a href="https://github.com/rishavvrajj" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 hover:underline hover:text-black dark:hover:text-white transition-all duration-150">github</a>
+                            <a href="https://www.linkedin.com/in/rishavv-rajj" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 hover:underline hover:text-black dark:hover:text-white transition-all duration-150">linkedin</a>
+                        </p>
                     </div>
                 </div>
                 <div className='flex items-end justify-end h-full w-fit'>
