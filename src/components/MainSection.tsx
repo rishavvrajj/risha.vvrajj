@@ -8,8 +8,18 @@ import { GitHubCalendar } from 'react-github-calendar'
 
 export default function MainSection() {
 
+    const [visitors, setVisitors] = useState<number | null>(null);
+
+    useEffect(() => {
+        fetch("/api/visitors")
+            .then((res) => res.json())
+            .then((data) => setVisitors(Number(data.visitors)))
+            .catch(() => setVisitors(null));
+    }, [])
+
+    
     const { theme, setTheme, resolvedTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+    const [ mounted, setMounted ] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -19,7 +29,6 @@ export default function MainSection() {
         setTheme(resolvedTheme === "dark" ? "light" : "dark");
     }
 
-    // Determine if it's currently dark mode safely, checking if we're mounted to avoid hydration mismatch
     const isDark = mounted && resolvedTheme === 'dark';
 
     return (
@@ -32,7 +41,7 @@ export default function MainSection() {
                         fill
                         priority
                         quality={100}
-                        sizes="100vw"
+                        sizes="(max-width: 576px) 100vw, 36rem"
                         className="object-cover"
                     />
                 )}
@@ -42,7 +51,7 @@ export default function MainSection() {
                         fill
                         priority
                         quality={100}
-                        sizes="100vw"
+                        sizes="(max-width: 576px) 100vw, 36rem"
                         className="object-cover"
                     />
                 )}
@@ -75,7 +84,7 @@ export default function MainSection() {
                     <span className='text-[8.4px] sm:text-xs tracking-wide'><span className='text-neutral-800 dark:text-neutral-200'>Role</span> - Product Engineer</span>
 
                     <span className='text-[8.4px] sm:text-xs tracking-wide'><span className='text-neutral-800 dark:text-neutral-200'>Focus</span> - Exploration</span>
-                    <span className='text-[8.4px] sm:text-xs tracking-wide'><span className='text-neutral-800 dark:text-neutral-200'>Profile Visits</span> - 928 views</span>
+                    <span className='text-[8.4px] sm:text-xs tracking-wide'><span className='text-neutral-800 dark:text-neutral-200'>Profile Visits</span> - {visitors === null ? "loading..." : visitors} views</span>
 
                     <span className='text-[8.4px] sm:text-xs tracking-wide'><span className='text-neutral-800 dark:text-neutral-200'>Location</span> - Patna, Bihar</span>
                     <span className='text-[8.4px] sm:text-xs tracking-wide'><span className='text-neutral-800 dark:text-neutral-200'>Interests</span> - Design, AI, Systems</span>
