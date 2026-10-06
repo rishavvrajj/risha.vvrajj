@@ -1,4 +1,4 @@
-import MainSection from "@/components/MainSection";
+import MainSection from "@/views/MainSection";
 
 export default function Home() {
   return (
