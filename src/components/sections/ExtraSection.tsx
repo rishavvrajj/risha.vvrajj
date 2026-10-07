@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Card } from '@/components/ui/Card'
 
 export default function ExtraSection({
   mounted,
@@ -8,8 +9,8 @@ export default function ExtraSection({
   isDark: boolean
 }) {
   return (
-    <div className='flex gap-4 bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 p-3 h-24 sm:h-38 border-x border-b border-dashed border-neutral-400 dark:border-neutral-700'>
-      <div className='flex h-full w-full items-center justify-between'>
+    <Card className='flex gap-4 bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 p-3 h-24 sm:h-38 border-x border-b border-dashed border-neutral-400 dark:border-neutral-700'>
+      <Card.Content className='flex h-full w-full items-center justify-between'>
         <div className='flex flex-col items-start justify-between h-full'>
           <h1 className='text-start w-full text-[8px] sm:text-sm'>
             [ extra ]
@@ -26,8 +27,8 @@ export default function ExtraSection({
             <a href="https://www.linkedin.com/in/rishavv-rajj" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 hover:underline hover:text-black dark:hover:text-white transition-all duration-150">linkedin</a>
           </p>
         </div>
-      </div>
-      <div className='flex items-end justify-end h-full w-fit'>
+      </Card.Content>
+      <Card.Media className='flex items-end justify-end h-full w-fit'>
         <div className='flex items-center justify-center h-18 w-18 sm:h-32 sm:w-32'>
           {mounted && (
             <Image
@@ -48,7 +49,7 @@ export default function ExtraSection({
             />
           )}
         </div>
-      </div>
-    </div>
+      </Card.Media>
+    </Card>
   )
 }
